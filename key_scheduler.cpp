@@ -14,6 +14,15 @@ string shift_left(string sub_key){
 vector<string> key_gen(string key){
     vector<string> sub_keys;
     //write code from here
+
+    // use PC1 to permute the initial key
+    string permutedKey(56,' ');
+    for (size_t i = 0; i < 56; i++) {
+        permutedKey[i] = key[PC1[i]-1];
+    }
+    cout << permutedKey << endl;
+
+
     for (int i = 0; i < 16; i++) {
         
     }
