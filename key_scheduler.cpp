@@ -20,43 +20,31 @@ vector<string> key_gen(string key){
     for (size_t i = 0; i < 56; i++) {
         permutedKey[i] = key[PC1[i]-1];
     }
-    cout <<"56 bit permutation: "<< permutedKey << endl;
 
-    //Convert to left and right blocks
-    string leftBlock = permutedKey.substr(0,28);
-    string rightBlock = permutedKey.substr(28,28);
+    //Convert to left and right halves
+    string l = permutedKey.substr(0,28);
+    string r = permutedKey.substr(28);
 
-    //Left shift blocks
+    // 16 rounds of subkey generation
     for (int i = 0; i < 16; i++) {
-        if(i == 0 || i == 1 || i == 8 || i == 15){
-		leftBlock = shift_left(leftBlock);
-		rightBlock = shift_left(rightBlock);
-	}
-	else{
-		for(int j = 0; j < 2; j++){
-		    leftBlock = shift_left(leftBlock);
-		    rightBlock = shift_left(rightBlock);
-		}
-	}
-	//Combine blocks and execute PC-2
-	string shiftedKey = leftBlock + rightBlock;
-	string pc2key(48,' ');
-	for(size_t j = 0; j < 48; j++){
-		pc2key[j] = shiftedKey[PC2[j]-1];
-	}
-	sub_keys.push_back(pc2key);
+        // every round has at least one left shift
+        l = shift_left(l);
+        r = shift_left(r);
+
+        // check for the rounds that we need 2 left shifts
+        if (i != 0 && i != 1 && i != 8 && i != 15) {
+            l = shift_left(l);
+            r = shift_left(r);
+	    }
+        //Combine blocks and use PC2 to permute the key
+        string shiftedKey = l + r;
+        string subKey(48,' ');
+        for(size_t j = 0; j < 48; j++){
+            subKey[j] = shiftedKey[PC2[j]-1];
+        }
+
+        sub_keys.push_back(subKey);
     }
 
-    for(int i = 0; i < sub_keys.size(); i++){
-	cout << "Subkey round "<< i <<": "<<sub_keys[i]<<endl;
-    }
     return sub_keys;
-}
-
-int main(){
-
-	string key = "0001001100110100010101110111100110011011101111001101111111110001";
-	key_gen(key);
-
-	return 0;
 }
