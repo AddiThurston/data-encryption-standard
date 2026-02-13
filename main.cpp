@@ -6,12 +6,19 @@
 using namespace std;
 
 int main() {
-  // please do not write code in this file
-  // you only need to implement the shift_left and key_gen functions in the key_scheduler.cpp
+  // do not write code in this file. Only write code in the DES.cpp
+  string encryption_flag;
+  cout << "Enter e or d to encrypt or decrypt: ";
+  cin >> encryption_flag;
+  string plaintext = hexToBinary("453001EDED553001");
   string key = hexToBinary("02FFA374EB55F57B");
-  string output;
   vector<string> sub_keys = key_gen(key);
-  for (int i = 0; i < sub_keys.size(); i++) {
-    cout << sub_keys[i] << endl;
+  if (encryption_flag[0] == 'e') {
+    string encrypted = encryption(plaintext, sub_keys);
+    cout << encrypted << endl;
+  } else if (encryption_flag[0] == 'd') {
+    string encrypted = encryption(plaintext, sub_keys);
+    string decrypted = decryption(encrypted, sub_keys);
+    cout << decrypted << endl;
   }
 }

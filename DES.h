@@ -6,8 +6,6 @@ using namespace std;
 
 string shift_left(string sub_key);
 vector<string> key_gen(string key);
-string CBC_encryption(vector<string> blocks, string key, string IV);
-string CBC_decryption(vector<string> blocks, string key, string IV);
 string expansion(string right_block);
 string pBox(string right_block);
 string sBox(string right_block);
