@@ -121,7 +121,7 @@ string binaryToAscii(string blocks) {
 }
 
 int binToDec(string bin) {
-  unsigned long dec = bitset<6>(bin).to_ulong();
+  unsigned long long dec = bitset<64>(bin).to_ullong();
   return dec;
 }
 
