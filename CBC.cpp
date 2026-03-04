@@ -9,22 +9,24 @@ using namespace std;
 // The key and IV are also binary strings
 
 string CBC_encryption(vector<string> blocks, string key, string IV) {
-  string encrypted;
-  vector<string> keys = key_gen(key); // generate the keys we'll need
+    string encrypted;
+    vector<string> keys = key_gen(key); // generate the keys we'll need
 
-  for (size_t i = 0; i < blocks.size(); i++) {
-    // xor the plaintext with the previous plaintext (or the iv)
-    if (i == 0) blocks[i] = XOR(blocks[i], IV, blocks[i].length());
-    else blocks[i] = XOR(blocks[i], blocks[i-1], blocks[i].length());
-    blocks[i] = encryption(blocks[i], keys);
-    encrypted += blocks[i];
-  }
+    for (size_t i = 0; i < blocks.size(); i++) {
+        // xor the plaintext with the previous plaintext (or the iv)
+        if (i == 0) blocks[i] = XOR(blocks[i], IV, blocks[i].length());
+        else blocks[i] = XOR(blocks[i], blocks[i - 1], blocks[i].length());
 
-  return encrypted;
+        // encrypt the XORed block
+        blocks[i] = encryption(blocks[i], keys);
+        encrypted += blocks[i];
+    }
+
+    return encrypted;
 }
 
 string CBC_decryption(vector<string> blocks, string key, string IV) {
-  string decrypted;
-  
-  return decrypted;
+    string decrypted;
+    
+    return decrypted;
 }
