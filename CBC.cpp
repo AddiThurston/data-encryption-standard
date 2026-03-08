@@ -27,6 +27,21 @@ string CBC_encryption(vector<string> blocks, string key, string IV) {
 
 string CBC_decryption(vector<string> blocks, string key, string IV) {
     string decrypted;
-    
+    string prev = IV;
+    vector<string> keys = key_gen(key);
+
+
+    for (size_t i = 0; i < blocks.size(); i++) {
+	//Temp to save the cipher text
+	string current = blocks[i];
+	string plain = decryption(current, keys);
+	plain = XOR(plain, prev, plain.length());
+
+	decrypted += plain;
+	//Update for next round
+	prev = current;
+
+    }
+
     return decrypted;
 }
