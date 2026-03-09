@@ -8,6 +8,8 @@ using namespace std;
 // The blocks has been padded and is already a vector of binary string
 // The key and IV are also binary strings
 
+// Group: Addison Thurston & William Kraus
+
 string CBC_encryption(vector<string> blocks, string key, string IV) {
     string encrypted;
     vector<string> keys = key_gen(key); // generate the keys we'll need
